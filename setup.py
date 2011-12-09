@@ -34,6 +34,7 @@ setup(
     author_email="zygmunt.krynicki@linaro.org",
     namespace_packages=['lava'],
     packages=['lava.vcs', 'lava.serial'],
+    description="LAVA friendly serial line support",
     license="AGPL",
     entry_points="""
     [lava_tool.commands]

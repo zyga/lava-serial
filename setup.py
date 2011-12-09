@@ -48,12 +48,12 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Testing"],
     install_requires=[
-        'versiontools >= 1.8',
+        'versiontools >= 1.8.2',
         'lava-tool >= 0.2',
         'pyserial >= 2.6',
     ],
     setup_requires=[
-        'versiontools >= 1.8'
+        'versiontools >= 1.8.2'
     ],
     zip_safe=True,
     include_package_data=True

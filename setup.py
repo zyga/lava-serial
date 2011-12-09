@@ -49,8 +49,8 @@ setup(
         "Topic :: Software Development :: Testing"],
     install_requires=[
         'versiontools >= 1.8',
-        'lava-tool >= 2.0',
-        'pyserial',
+        'lava-tool >= 0.2',
+        'pyserial >= 2.6',
     ],
     setup_requires=[
         'versiontools >= 1.8'

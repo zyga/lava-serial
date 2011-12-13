@@ -90,12 +90,16 @@ class Miniterm(object):
     def start(self):
         self.alive = True
         # start serial->console thread
-        self.receiver_thread = threading.Thread(target=self.reader)
+        self.receiver_thread = threading.Thread(
         self.receiver_thread.setDaemon(1)
+            target=self._reader,
+            name="reader for serial %s" % self.serial.portstr)
         self.receiver_thread.start()
         # enter console->serial loop
-        self.transmitter_thread = threading.Thread(target=self.writer)
+        self.transmitter_thread = threading.Thread(
         self.transmitter_thread.setDaemon(1)
+            target=self._writer,
+            name="writer for serial %s" % self.serial.portstr)
         self.transmitter_thread.start()
 
     def stop(self):
@@ -132,7 +136,7 @@ class Miniterm(object):
             # yet received. ignore this error.
             pass
 
-    def reader(self):
+    def _reader(self):
         """loop and copy serial->console"""
         try:
             while self.alive:
@@ -171,8 +175,7 @@ class Miniterm(object):
             # point...
             raise
 
-
-    def writer(self):
+    def _writer(self):
         """loop and copy console->serial until EXITCHARCTER character is
            found. when MENUCHARACTER is found, interpret the next key
            locally.

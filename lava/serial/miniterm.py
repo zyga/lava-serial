@@ -187,7 +187,7 @@ class Miniterm:
         try:
             while self.alive:
                 try:
-                    c = console.getkey()
+                    c = self.console.getkey()
                 except KeyboardInterrupt:
                     c = '\x03'
                 if menu_active:
@@ -198,7 +198,7 @@ class Miniterm:
                     elif c == '\x15':                       # CTRL+U -> upload file
                         sys.stderr.write('\n--- File to upload: ')
                         sys.stderr.flush()
-                        console.cleanup()
+                        self.console.cleanup()
                         filename = sys.stdin.readline().rstrip('\r\n')
                         if filename:
                             try:
@@ -216,7 +216,7 @@ class Miniterm:
                                 sys.stderr.write('\n--- File %s sent ---\n' % filename)
                             except IOError, e:
                                 sys.stderr.write('--- ERROR opening file %s: %s ---\n' % (filename, e))
-                        console.setup()
+                        self.console.setup()
                     elif c in '\x08hH?':                    # CTRL+H, h, H, ? -> Show help
                         sys.stderr.write(get_help_text())
                     elif c == '\x12':                       # CTRL+R -> Toggle RTS
@@ -255,7 +255,7 @@ class Miniterm:
                     elif c in 'bB':                         # B -> change baudrate
                         sys.stderr.write('\n--- Baudrate: ')
                         sys.stderr.flush()
-                        console.cleanup()
+                        self.console.cleanup()
                         backup = self.serial.baudrate
                         try:
                             self.serial.baudrate = int(sys.stdin.readline().strip())
@@ -264,7 +264,7 @@ class Miniterm:
                             self.serial.baudrate = backup
                         else:
                             self.dump_port_settings()
-                        console.setup()
+                        self.console.setup()
                     elif c == '8':                          # 8 -> change to 8 bits
                         self.serial.bytesize = serial.EIGHTBITS
                         self.dump_port_settings()

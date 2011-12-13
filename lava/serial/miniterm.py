@@ -32,6 +32,7 @@ def key_description(character):
     else:
         return repr(character)
 
+
 # help text, starts with blank line! it's a function so that the current values
 # for the shortcut keys is used and not the value at program start
 def get_help_text():
@@ -87,6 +88,12 @@ class Miniterm(object):
         self.rts_state = True
         self.break_state = False
         self.alive = False
+
+    def run_until_stopped(self):
+        try:
+            self._start()
+        finally:
+            self._join()
 
     def _start(self):
         # set timeouts on the serial port so that we can reliably exit

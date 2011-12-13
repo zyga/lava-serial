@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+# Copyright (C) 2011 Linaro Limited
+# Copyright (C) 2002-2009 Chris Liechti
+#
+# Author: Chris Liechti <cliechti@gmx.net>
+# Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 
-# Very simple serial terminal
-# (C)2002-2009 Chris Liechti <cliechti@gmx.net>
 
 # Input characters are sent directly (only LF -> CR/LF/CRLF translation is
 # done), received characters are displayed as is (or escaped trough pythons

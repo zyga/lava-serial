@@ -86,11 +86,13 @@ class Miniterm(object):
         self.dtr_state = True
         self.rts_state = True
         self.break_state = False
+        self.alive = False
 
     def start(self):
         # set timeouts on the serial port so that we can reliably exit
         self.serial.setTimeout(1.0)
         self.serial.setWriteTimeout(1.0)
+        # set alive so that threads keep looping
         self.alive = True
         # start serial->console thread
         self.receiver_thread = threading.Thread(

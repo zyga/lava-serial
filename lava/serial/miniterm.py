@@ -108,10 +108,9 @@ class Miniterm(object):
     def stop(self):
         self.alive = False
 
-    def join(self, transmit_only=False):
+    def _join(self):
         self.transmitter_thread.join()
-        if not transmit_only:
-            self.receiver_thread.join()
+        self.receiver_thread.join()
 
     def _dump_port_settings(self):
         sys.stderr.write("\n--- Settings: %s  %s,%s,%s,%s\n" % (

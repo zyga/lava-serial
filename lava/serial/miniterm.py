@@ -15,6 +15,14 @@ import sys, os, serial, threading
 EXITCHARCTER = '\x1d'   # GS/CTRL+]
 MENUCHARACTER = '\x14'  # Menu: CTRL+T
 
+CONVERT_CRLF = 2
+CONVERT_CR   = 1
+CONVERT_LF   = 0
+NEWLINE_CONVERISON_MAP = ('\n', '\r', '\r\n')
+LF_MODES = ('LF', 'CR', 'CR/LF')
+
+REPR_MODES = ('raw', 'some control', 'all control', 'hex')
+
 
 def key_description(character):
     """generate a readable description for a key"""
@@ -67,14 +75,6 @@ def get_help_text():
 
 
 
-
-CONVERT_CRLF = 2
-CONVERT_CR   = 1
-CONVERT_LF   = 0
-NEWLINE_CONVERISON_MAP = ('\n', '\r', '\r\n')
-LF_MODES = ('LF', 'CR', 'CR/LF')
-
-REPR_MODES = ('raw', 'some control', 'all control', 'hex')
 
 class Miniterm:
     def __init__(self, port, baudrate, parity, rtscts, xonxoff, echo=False, convert_outgoing=CONVERT_CRLF, repr_mode=0):

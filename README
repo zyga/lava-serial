@@ -1,0 +1,29 @@
+LAVA Serial
+===========
+
+LAVA Serial is a serial management component of LAVA. It abstracts away local
+and remote (TCP/IP) serial lines behind a common API. It also provides a
+service that can be started to expose any local serial lines as TCP:IP sockets.
+
+Usage
+=====
+
+LAVA Serial can be used in several ways when coupled with lava-tool command
+line swiss-knife for LAVA. Some parts of the functionality are exposed as
+additional lava-tool sub-commands. Most of the features are aimed at
+integration with LAVA Server were one can register serial lines directly from
+the admin panel.
+
+
+Direct connections
+^^^^^^^^^^^^^^^^^^
+
+You can use lava-tool to invoke a few of the lava-serial features from command
+line. Here are some examples.
+
+This command attaches to a locally connected serial line. Here using a typical
+USB-Serial adapter as found in most serial-less devices nowadays. The output is
+what the serial lines sees. The defaults for the connection are: 115200 8N1,
+without flow control::
+
+    $ lava serial console --direct /dev/ttyUSB0

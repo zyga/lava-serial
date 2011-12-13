@@ -106,7 +106,7 @@ class Miniterm(object):
         if not transmit_only:
             self.receiver_thread.join()
 
-    def dump_port_settings(self):
+    def _dump_port_settings(self):
         sys.stderr.write("\n--- Settings: %s  %s,%s,%s,%s\n" % (
             self.serial.portstr,
             self.serial.baudrate,
@@ -230,7 +230,7 @@ class Miniterm(object):
                         self.echo = not self.echo
                         sys.stderr.write('--- local echo %s ---\n' % (self.echo and 'active' or 'inactive'))
                     elif c == '\x09':                       # CTRL+I -> info
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c == '\x01':                       # CTRL+A -> cycle escape mode
                         self.repr_mode += 1
                         if self.repr_mode > 3:

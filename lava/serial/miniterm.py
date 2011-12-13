@@ -5,13 +5,15 @@
 # Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 
 
+import sys
+import threading
+import logging
 # Input characters are sent directly (only LF -> CR/LF/CRLF translation is
 # done), received characters are displayed as is (or escaped trough pythons
 # repr, useful for debug purposes)
 
 import serial as pyserial
 
-import sys, os, serial, threading
 
 EXITCHARCTER = '\x1d'   # GS/CTRL+]
 MENUCHARACTER = '\x14'  # Menu: CTRL+T

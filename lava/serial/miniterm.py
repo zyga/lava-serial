@@ -77,9 +77,8 @@ def get_help_text():
 }
 
 
+class Miniterm(object):
 
-
-class Miniterm:
     def __init__(self, serial, console, echo=False, convert_outgoing=CONVERT_CRLF, repr_mode=0):
         self.serial = serial
         self.console = console

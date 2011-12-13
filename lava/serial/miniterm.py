@@ -9,6 +9,7 @@
 # done), received characters are displayed as is (or escaped trough pythons
 # repr, useful for debug purposes)
 
+import serial as pyserial
 
 import sys, os, serial, threading
 
@@ -58,7 +59,7 @@ def get_help_text():
 --- x X           disable/enable software flow control
 --- r R           disable/enable hardware flow control
 """ % {
-    'version': getattr(serial, 'VERSION', 'unkown'),
+    'version': getattr(pyserial, 'VERSION', 'unknown'),
     'exit': key_description(EXITCHARCTER),
     'menu': key_description(MENUCHARACTER),
     'rts': key_description('\x12'),
@@ -133,7 +134,7 @@ class Miniterm:
                 (self.serial.getRI() and 'active' or 'inactive'),
                 (self.serial.getCD() and 'active' or 'inactive'),
                 ))
-        except serial.SerialException:
+        except pyserial.SerialException:
             # on RFC 2217 ports it can happen to no modem state notification was
             # yet received. ignore this error.
             pass
@@ -171,7 +172,7 @@ class Miniterm:
                     for character in data:
                         sys.stdout.write("%s " % character.encode('hex'))
                 sys.stdout.flush()
-        except serial.SerialException, e:
+        except pyserial.SerialException as exc:
             self.alive = False
             # would be nice if the console reader could be interruptted at this
             # point...
@@ -266,31 +267,31 @@ class Miniterm:
                             self.dump_port_settings()
                         self.console.setup()
                     elif c == '8':                          # 8 -> change to 8 bits
-                        self.serial.bytesize = serial.EIGHTBITS
+                        self.serial.bytesize = pyserial.EIGHTBITS
                         self.dump_port_settings()
                     elif c == '7':                          # 7 -> change to 8 bits
-                        self.serial.bytesize = serial.SEVENBITS
+                        self.serial.bytesize = pyserial.SEVENBITS
                         self.dump_port_settings()
                     elif c in 'eE':                         # E -> change to even parity
-                        self.serial.parity = serial.PARITY_EVEN
+                        self.serial.parity = pyserial.PARITY_EVEN
                         self.dump_port_settings()
                     elif c in 'oO':                         # O -> change to odd parity
-                        self.serial.parity = serial.PARITY_ODD
+                        self.serial.parity = pyserial.PARITY_ODD
                         self.dump_port_settings()
                     elif c in 'mM':                         # M -> change to mark parity
-                        self.serial.parity = serial.PARITY_MARK
+                        self.serial.parity = pyserial.PARITY_MARK
                         self.dump_port_settings()
                     elif c in 'sS':                         # S -> change to space parity
-                        self.serial.parity = serial.PARITY_SPACE
+                        self.serial.parity = pyserial.PARITY_SPACE
                         self.dump_port_settings()
                     elif c in 'nN':                         # N -> change to no parity
-                        self.serial.parity = serial.PARITY_NONE
+                        self.serial.parity = pyserial.PARITY_NONE
                         self.dump_port_settings()
                     elif c == '1':                          # 1 -> change to 1 stop bits
-                        self.serial.stopbits = serial.STOPBITS_ONE
+                        self.serial.stopbits = pyserial.STOPBITS_ONE
                         self.dump_port_settings()
                     elif c == '2':                          # 2 -> change to 2 stop bits
-                        self.serial.stopbits = serial.STOPBITS_TWO
+                        self.serial.stopbits = pyserial.STOPBITS_TWO
                         self.dump_port_settings()
                     elif c == '3':                          # 3 -> change to 1.5 stop bits
                         self.serial.stopbits = serial.STOPBITS_ONE_POINT_FIVE

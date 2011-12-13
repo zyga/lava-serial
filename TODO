@@ -1,0 +1,40 @@
+Client features:
+    - tool: tcp/ip service
+    - tool: tcp/ip client
+    - tool: rfc2217 service
+    - tool: rfc2217 client
+    - model: SerialLine(type, path, default_config),
+             type is one of {direct,network,rfc2217}
+             path is a string
+             default_config is a optional foreign key
+             must be a RestrictedResource
+    - model: SerialConfig(baud, parity, ...)
+    - model: SerialSession(serial_line, start_ts, end_ts, log_file)
+             needs is_open() state tracking so that we can display
+             nice UI, trace serial lines, etc. Perhaps we should have
+             a title attribute as well (user editable) and links to
+             lava-scheduler jobs (breaking cross-system boundary though)
+    - celery: serial_service that provides an IO bridge between the device and
+      django using AMQP (need to check if AMQP has a sensible ordered data mode)
+    - API: serial.open(name, config_dict, privacy_dict) -> session_id or SerialBusy, 404, 403 exceptios.
+            Check access rights, open the serial (start celery task), create a
+            session object
+    - API: serial.close(session_id) -> 200, 404, 403
+            End the session, make celery notice and stop the task
+    - API: serial.io(session_id, send_buf, timeout) -> recv_buf or 404, 403 exceptions.
+            This one is polling the session for IO for the duration of the
+            timeout (it has to be small enough). There will be a second direct
+            streaming API but lava-server needs to have more code for that
+            first (likely via web sockets). The returned and sent data is raw,
+            without any translations. The receiving end needs a terminal
+            emulator (either a real one or via <canvas> and javascript.
+    - API: serial.log(session_id, start_range, end_range) -> recv_buf or 404, 403 exceptions
+            This one is tricky, I'd like to have a way to log the serial
+            traffic with real time so that we can construct a "live" preview of
+            what was happening in past sessions.  Perhaps doing that will
+            require us to have more than one format (with timestamps, without
+            timestamps)
+
+
+Prominent bugs to fix:
+    - none

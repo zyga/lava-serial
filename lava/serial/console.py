@@ -47,8 +47,6 @@ if os.name == 'nt':
                         return '\n'
                     return z
 
-    console = Console()
-
 elif os.name == 'posix':
     import termios, sys, os
     class Console:
@@ -69,14 +67,6 @@ elif os.name == 'posix':
 
         def cleanup(self):
             termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.old)
-
-    console = Console()
-
-    def cleanup_console():
-        console.cleanup()
-
-    console.setup()
-    sys.exitfunc = cleanup_console      #terminal modes have to be restored on exit...
 
 else:
     raise NotImplementedError, "Sorry no implementation for your platform (%s) available." % sys.platform

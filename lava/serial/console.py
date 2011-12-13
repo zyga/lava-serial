@@ -3,6 +3,27 @@
 #
 # Author: Chris Liechti <cliechti@gmx.net>
 # Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
+import os
+
+from contextlib import contextmanager
+
+
+class ConsoleBase(object):
+
+    def setup(self):
+        pass
+
+    def cleanup(self):
+        pass
+
+    @contextmanager
+    def grab(self):
+        try:
+            self.setup()
+            yield
+        finally:
+            self.cleanup()
+
 
 if os.name == 'nt':
     import msvcrt

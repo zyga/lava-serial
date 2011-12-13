@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (C) 2011 Linaro Limited
 # Copyright (C) 2002-2009 Chris Liechti
 #

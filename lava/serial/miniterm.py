@@ -88,7 +88,7 @@ class Miniterm(object):
         self.break_state = False
         self.alive = False
 
-    def start(self):
+    def _start(self):
         # set timeouts on the serial port so that we can reliably exit
         self.serial.setTimeout(1.0)
         self.serial.setWriteTimeout(1.0)

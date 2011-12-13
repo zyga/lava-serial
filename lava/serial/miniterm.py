@@ -8,9 +8,6 @@
 import sys
 import threading
 import logging
-# Input characters are sent directly (only LF -> CR/LF/CRLF translation is
-# done), received characters are displayed as is (or escaped trough pythons
-# repr, useful for debug purposes)
 
 import serial as pyserial
 

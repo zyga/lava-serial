@@ -1,5 +1,8 @@
-# first choose a platform dependant way to read single characters from the console
-global console
+# Copyright (C) 2011 Linaro Limited
+# Copyright (C) 2002-2009 Chris Liechti
+#
+# Author: Chris Liechti <cliechti@gmx.net>
+# Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 
 if os.name == 'nt':
     import msvcrt

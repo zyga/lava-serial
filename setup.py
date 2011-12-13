@@ -37,8 +37,10 @@ setup(
     description="LAVA friendly serial line support",
     license="AGPL",
     entry_points="""
-    [lava_tool.commands]
+    [lava.commands]
     serial = lava.serial.commands:SerialCommand
+    [lava.serial.commands]
+    console = lava.serial.commands:ConsoleCommand
     """,
     classifiers=[
         "Development Status :: 3 - Alpha",

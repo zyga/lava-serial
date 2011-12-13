@@ -41,7 +41,8 @@ if os.name == 'nt':
                     return z
 
 elif os.name == 'posix':
-    import termios, sys
+    import termios
+    import sys
 
     class Console(ConsoleBase):
 

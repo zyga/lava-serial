@@ -16,8 +16,8 @@ EXITCHARCTER = '\x1d'   # GS/CTRL+]
 MENUCHARACTER = '\x14'  # Menu: CTRL+T
 
 CONVERT_CRLF = 2
-CONVERT_CR   = 1
-CONVERT_LF   = 0
+CONVERT_CR = 1
+CONVERT_LF = 0
 NEWLINE_CONVERISON_MAP = ('\n', '\r', '\r\n')
 LF_MODES = ('LF', 'CR', 'CR/LF')
 
@@ -197,7 +197,7 @@ class Miniterm(object):
                 except KeyboardInterrupt:
                     c = '\x03'
                 if menu_active:
-                    if c == MENUCHARACTER or c == EXITCHARCTER: # Menu character again/exit char -> send itself
+                    if c == MENUCHARACTER or c == EXITCHARCTER:  # Menu character again/exit char -> send itself
                         self.serial.write(c)                    # send character
                         if self.echo:
                             sys.stdout.write(c)
@@ -310,7 +310,7 @@ class Miniterm(object):
                     else:
                         sys.stderr.write('--- unknown menu character %s --\n' % key_description(c))
                     menu_active = False
-                elif c == MENUCHARACTER: # next char will be for menu
+                elif c == MENUCHARACTER:  # next char will be for menu
                     menu_active = True
                 elif c == EXITCHARCTER: 
                     self.stop()

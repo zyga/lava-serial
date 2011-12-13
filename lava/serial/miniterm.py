@@ -95,6 +95,9 @@ class Miniterm(object):
         finally:
             self._join()
 
+    def stop(self):
+        self.alive = False
+
     def _start(self):
         # set timeouts on the serial port so that we can reliably exit
         self.serial.setTimeout(1.0)
@@ -111,9 +114,6 @@ class Miniterm(object):
             target=self._writer,
             name="writer for serial %s" % self.serial.portstr)
         self.transmitter_thread.start()
-
-    def stop(self):
-        self.alive = False
 
     def _join(self):
         self.transmitter_thread.join()

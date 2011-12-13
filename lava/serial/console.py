@@ -27,15 +27,8 @@ class ConsoleBase(object):
 
 if os.name == 'nt':
     import msvcrt
-    class Console:
-        def __init__(self):
-            pass
 
-        def setup(self):
-            pass    # Do nothing for 'nt'
-
-        def cleanup(self):
-            pass    # Do nothing for 'nt'
+    class Console(ConsoleBase):
 
         def getkey(self):
             while 1:
@@ -48,8 +41,10 @@ if os.name == 'nt':
                     return z
 
 elif os.name == 'posix':
-    import termios, sys, os
-    class Console:
+    import termios, sys
+
+    class Console(ConsoleBase):
+
         def __init__(self):
             self.fd = sys.stdin.fileno()
 

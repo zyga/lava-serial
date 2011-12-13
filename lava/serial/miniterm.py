@@ -126,8 +126,7 @@ class Miniterm(object):
                 (self.serial.getCTS() and 'active' or 'inactive'),
                 (self.serial.getDSR() and 'active' or 'inactive'),
                 (self.serial.getRI() and 'active' or 'inactive'),
-                (self.serial.getCD() and 'active' or 'inactive'),
-                ))
+                (self.serial.getCD() and 'active' or 'inactive')))
         except pyserial.SerialException:
             # on RFC 2217 ports it can happen to no modem state notification was
             # yet received. ignore this error.

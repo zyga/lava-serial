@@ -299,7 +299,7 @@ class Miniterm(object):
                         self.serial.stopbits = pyserial.STOPBITS_TWO
                         self.dump_port_settings()
                     elif c == '3':                          # 3 -> change to 1.5 stop bits
-                        self.serial.stopbits = serial.STOPBITS_ONE_POINT_FIVE
+                        self.serial.stopbits = pyserial.STOPBITS_ONE_POINT_FIVE
                         self.dump_port_settings()
                     elif c in 'xX':                         # X -> change software flow control
                         self.serial.xonxoff = (c == 'X')

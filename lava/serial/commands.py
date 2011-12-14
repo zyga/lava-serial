@@ -209,12 +209,12 @@ class ConsoleCommand(Command):
         if self.args.dtr_state is not None:
             if not self.args.quiet:
                 sys.stderr.write('--- forcing DTR %s\n' % (self.args.dtr_state and 'active' or 'inactive'))
-            serial_line.setDTR(self.args.dtr_state)
+            serial.setDTR(self.args.dtr_state)
             term.dtr_state = self.args.dtr_state
         if self.args.rts_state is not None:
             if not self.args.quiet:
                 sys.stderr.write('--- forcing RTS %s\n' % (self.args.rts_state and 'active' or 'inactive'))
-            serial_line.setRTS(self.args.rts_state)
+            serial.setRTS(self.args.rts_state)
             term.rts_state = self.args.rts_state
         return term
 

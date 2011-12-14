@@ -136,17 +136,24 @@ class ConsoleCommand(Command):
 
         crlf_group = terminal_group.add_mutually_exclusive_group()
 
-        crlf_group.add_argument("--cr",
-            dest="cr",
-            action="store_true",
-            help="do not send CR+LF, send CR only",
-            default=False)
-
         crlf_group.add_argument("--lf",
-            dest="lf",
-            action="store_true",
-            help="do not send CR+LF, send LF only",
-            default=False)
+            dest="convert_cr_lf",
+            action="store_const",
+            const=miniterm.CONVERT_LF,
+            help="send LF for each newline (default)",
+            default=miniterm.CONVERT_LF)
+
+        crlf_group.add_argument("--cr",
+            dest="convert_cr_lf",
+            action="store_const",
+            const=miniterm.CONVERT_CR,
+            help="send CR for each newline")
+
+        crlf_group.add_argument("--crlf",
+            dest="convert_cr_lf",
+            action="store_const",
+            const=miniterm.CONVERT_CRLF,
+            help="send CR+LF for each newline")
 
         terminal_group.add_argument("--exit-char",
             dest="exit_char",
@@ -178,16 +185,13 @@ class ConsoleCommand(Command):
             default=0)
 
     def _config_miniterm(self, serial, console):
-        convert_outgoing = miniterm.CONVERT_CRLF
-        if self.args.cr:
-            convert_outgoing = miniterm.CONVERT_CR
-        elif self.args.lf:
-            convert_outgoing = miniterm.CONVERT_LF
+        if self.args.repr_mode > 3:
+            self.args.repr_mode = 3
         term = miniterm.Miniterm(
             serial,
             console,
             echo=self.args.echo,
-            convert_outgoing=convert_outgoing,
+            convert_outgoing=self.args.convert_cr_lf,
             repr_mode=self.args.repr_mode)
         if not self.args.quiet:
             sys.stderr.write('--- Miniterm on %s: %d,%s,%s,%s ---\n' % (

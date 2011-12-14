@@ -28,7 +28,7 @@ except ImportError:
 
 
 setup(
-    name='lava-vcs',
+    name='lava-serial',
     version=":versiontools:lava.serial:",
     author="Zygmunt Krynicki",
     author_email="zygmunt.krynicki@linaro.org",

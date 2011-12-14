@@ -295,15 +295,19 @@ class Miniterm(object):
                         sys.stderr.flush()
                         self.console.cleanup()
                         backup = self.serial.baudrate
-                        try:
-                            self.serial.baudrate = int(
-                                sys.stdin.readline().strip())
-                        except ValueError, e:
-                            sys.stderr.write(
-                                '--- ERROR setting baudrate: %s ---\n' % (e,))
-                            self.serial.baudrate = backup
-                        else:
-                            self._dump_port_settings()
+                        new_baudrate = sys.stdin.readline().strip()
+                        if new_baudrate:
+                            try:
+                                self.serial.baudrate = int(
+                                    sys.stdin.readline().strip())
+                            except ValueError, e:
+                                sys.stderr.write(
+                                    '--- ERROR setting baudrate: %s ---\n' % (e,))
+                                self.serial.baudrate = backup
+                            else:
+                                self._dump_port_settings()
+                        else: 
+                            sys.stderr.write('--- Baud rate not changed ---\n')
                         self.console.setup()
                     elif c == '8':
                         # 8 -> change to 8 bits

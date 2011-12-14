@@ -303,56 +303,56 @@ class Miniterm(object):
                                 '--- ERROR setting baudrate: %s ---\n' % (e,))
                             self.serial.baudrate = backup
                         else:
-                            self.dump_port_settings()
+                            self._dump_port_settings()
                         self.console.setup()
                     elif c == '8':
                         # 8 -> change to 8 bits
                         self.serial.bytesize = pyserial.EIGHTBITS
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c == '7':
                         # 7 -> change to 8 bits
                         self.serial.bytesize = pyserial.SEVENBITS
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'eE':
                         # E -> change to even parity
                         self.serial.parity = pyserial.PARITY_EVEN
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'oO':
                         # O -> change to odd parity
                         self.serial.parity = pyserial.PARITY_ODD
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'mM':
                         # M -> change to mark parity
                         self.serial.parity = pyserial.PARITY_MARK
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'sS':
                         # S -> change to space parity
                         self.serial.parity = pyserial.PARITY_SPACE
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'nN':
                         # N -> change to no parity
                         self.serial.parity = pyserial.PARITY_NONE
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c == '1':
                         # 1 -> change to 1 stop bits
                         self.serial.stopbits = pyserial.STOPBITS_ONE
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c == '2':
                         # 2 -> change to 2 stop bits
                         self.serial.stopbits = pyserial.STOPBITS_TWO
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c == '3':
                         # 3 -> change to 1.5 stop bits
                         self.serial.stopbits = pyserial.STOPBITS_ONE_POINT_FIVE
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'xX':
                         # X -> change software flow control
                         self.serial.xonxoff = (c == 'X')
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     elif c in 'rR':
                         # R -> change hardware flow control
                         self.serial.rtscts = (c == 'R')
-                        self.dump_port_settings()
+                        self._dump_port_settings()
                     else:
                         sys.stderr.write(
                             '--- unknown menu character %s --\n' % (

@@ -7,7 +7,6 @@
 
 import sys
 import threading
-import logging
 
 import serial as pyserial
 
@@ -178,7 +177,7 @@ class Miniterm(object):
                     for character in data:
                         sys.stdout.write("%s " % character.encode('hex'))
                 sys.stdout.flush()
-        except pyserial.SerialException as exc:
+        except pyserial.SerialException:
             self.alive = False
             # would be nice if the console reader could be interruptted at this
             # point...

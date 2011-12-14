@@ -17,7 +17,6 @@
 # along with LAVA Serial.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import logging
 
 import serial as pyserial
 

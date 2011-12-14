@@ -26,6 +26,7 @@ class DirectSerialLine(pyserial.Serial):
             if exc.errno == errno.EAGAIN:
                 self.close()
                 raise pyserial.SerialException(
-                    "Unable to lock the serial line (perhaps somene is using it)")
+                    "Unable to lock the serial line "
+                    "(perhaps somene is using it)")
             else:
                 raise

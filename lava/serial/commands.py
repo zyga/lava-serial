@@ -2,7 +2,7 @@
 #
 # Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 #
-# This file is part of LAVA Serial 
+# This file is part of LAVA Serial
 #
 # LAVA Serial is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3
@@ -79,7 +79,8 @@ class ConsoleCommand(Command):
         connection_group.add_argument(
             "--direct",
             metavar="DEVICE",
-            help="connect to a directly attached serial line (such as /dev/ttyUSB0)")
+            help=("connect to a directly attached serial line"
+                  "(such as /dev/ttyUSB0)"))
         connection_group.add_argument(
             "--network",
             metavar="IP:PORT",
@@ -131,7 +132,8 @@ class ConsoleCommand(Command):
             choices=[0, 1],
             default=None)
 
-        terminal_group = parser.add_argument_group(title="terminal emulator options")
+        terminal_group = parser.add_argument_group(
+            title="terminal emulator options")
 
         crlf_group = terminal_group.add_mutually_exclusive_group()
 
@@ -157,13 +159,15 @@ class ConsoleCommand(Command):
         terminal_group.add_argument("--exit-char",
             dest="exit_char",
             type=int,
-            help="ASCII code of special character that is used to exit the application",
+            help=("ASCII code of special character that is used to exit the"
+                  " application"),
             default=0x1d)
 
         terminal_group.add_argument("--menu-char",
             dest="menu_char",
             type=int,
-            help="ASCII code of special character that is used to control miniterm (menu)",
+            help=("ASCII code of special character that is used to control"
+                  " miniterm (menu)"),
             default=0x14)
 
         terminal_group.add_argument("-e", "--echo",
@@ -199,20 +203,24 @@ class ConsoleCommand(Command):
                 serial.bytesize,
                 serial.parity,
                 serial.stopbits))
-            sys.stderr.write('--- Quit: %s  |  Menu: %s | Help: %s followed by %s ---\n' % (
+            sys.stderr.write(
+                '--- Quit: %s  |  Menu: %s | Help: %s followed by %s ---\n' % (
                 miniterm.key_description(miniterm.EXITCHARCTER),
                 miniterm.key_description(miniterm.MENUCHARACTER),
                 miniterm.key_description(miniterm.MENUCHARACTER),
-                miniterm.key_description('\x08'),
-            ))
+                miniterm.key_description('\x08')))
         if self.args.dtr_state is not None:
             if not self.args.quiet:
-                sys.stderr.write('--- forcing DTR %s\n' % (self.args.dtr_state and 'active' or 'inactive'))
+                sys.stderr.write(
+                    '--- forcing DTR %s\n' % (
+                        self.args.dtr_state and 'active' or 'inactive'))
             serial.setDTR(self.args.dtr_state)
             term.dtr_state = self.args.dtr_state
         if self.args.rts_state is not None:
             if not self.args.quiet:
-                sys.stderr.write('--- forcing RTS %s\n' % (self.args.rts_state and 'active' or 'inactive'))
+                sys.stderr.write(
+                    '--- forcing RTS %s\n' % (
+                        self.args.rts_state and 'active' or 'inactive'))
             serial.setRTS(self.args.rts_state)
             term.rts_state = self.args.rts_state
         return term
@@ -227,10 +235,12 @@ class ConsoleCommand(Command):
                     rtscts=self.args.rtscts,
                     xonxoff=self.args.xonxoff)
             except pyserial.SerialException as exc:
-                sys.stderr.write("could not open port %r: %s\n" % (self.args.direct, exc))
+                sys.stderr.write(
+                    "could not open port %r: %s\n" % (self.args.direct, exc))
                 return 1
         elif self.args.network:
-            raise NotImplementedError("Networked serial line is not implemented")
+            raise NotImplementedError(
+                "Networked serial line is not implemented")
         elif self.args.managed:
             raise NotImplementedError("LAVA Server integration is not done")
         # Initialize our console object

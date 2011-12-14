@@ -4,7 +4,7 @@
 #
 # Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 #
-# This file is part of LAVA Serial 
+# This file is part of LAVA Serial
 #
 # LAVA Serial is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3

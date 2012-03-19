@@ -27,3 +27,78 @@ what the serial lines sees. The defaults for the connection are: 115200 8N1,
 without flow control::
 
     $ lava serial console --direct /dev/ttyUSB0
+
+
+TCP/IP connections
+^^^^^^^^^^^^^^^^^^
+
+You can use lava-tool to connect to simple simple TCP/IP socket. Note that in
+this mode there are no serial line settings (no baud rate or anything else). To
+connect just pass --network with a IP:PORT pair, like this::
+
+    $ lava serial console --network 192.168.1.3:1234
+
+
+Serial to TCP/IP
+^^^^^^^^^^^^^^^^
+
+Here a local serial line is exposed as a TCP/IP socket. There is no
+authentication so make sure to firewall the socket or better yet use the
+loopback interface (and trust the software and the users on your host)::
+
+    $ lava serial service --direct /dev/ttyUSB0 --socket 192.168.1.3:1234
+
+You can still pass all the low-level details such as baud rate, flow control,
+etc. as additional arguments. The socket will not allow clients to change any
+of that.
+
+
+Serial to RFC2217
+^^^^^^^^^^^^^^^^^
+
+To provide a greater level of flexibility you can use RFC2217 protocol to
+expose serial configuration over the remote end. In this case a client can
+connect and freely specify connection details (again, such as baud rate and
+flow control).
+
+To enable RFC2217 mode simply pass --rfc2217 to service command::
+    $ lava serial service --direct /dev/ttyUSB0 --socket 192.168.1.3:1234 --rfc2217
+
+
+RFC2217 connections
+^^^^^^^^^^^^^^^^^^^
+
+Finally once you have a RFC2217 socket exposed somewhere you can connect
+back to it with a command like this::
+
+    $ lava serial console --rfc2217 192.168.1.3:1234
+
+
+LAVA Server connections
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The best, most secure way to access a remote serial line is with a LAVA Server
+installation. On the server, create an administrative account (with lava-server
+manage createsuperuser). Open your browser, sign in to LAVA and go to the
+administrative interface. Define a new serial line, define the type of
+connection (local, tcp or rfc2217) and set the owner of the line to yourself.
+If you'd like to allow a group of users to share this line define a group and
+make that group the owner of the line.
+    
+Finally test the connection with:: 
+
+    $ lava serial console --managed bookmark:lab/serial1
+
+This command will use LAVA Server XML-RPC interface to connect to a remote
+server, query for the 'serial1' serial line and open it. The bookmark: prefix
+will redirect the query to a previously stored URL prefix.
+
+A bookmark may be crated with::
+
+    $ lava bookmark lab https://validation.linaro.org/lava-server/RPC2/
+
+If you don't have an authentication token yet you should get one. To do so run
+this command. It will contact the server, get a special URL, ask you to confirm
+the request (in your browser) and save it:::
+
+    $ lava login bookmark:lab username

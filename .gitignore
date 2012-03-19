@@ -1,4 +1,5 @@
-*.swp
-*.pyc
+*.egg
 *.egg-info
+*.pyc
+*.swp
 dist

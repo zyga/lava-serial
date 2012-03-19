@@ -1,4 +1,4 @@
-# Copyright (C) 2011 Linaro Limited
+# Copyright (C) 2011-2012 Linaro Limited
 #
 # Author: Zygmunt Krynicki <zygmunt.krynicki@linaro.org>
 #
@@ -17,10 +17,11 @@
 # along with LAVA Serial.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
+import logging
 
 import serial as pyserial
 
-from lava_tool.interface import Command, SubCommand
+from lava_tool.interface import Command, SubCommand, LavaCommandError
 from lava.serial.direct import DirectSerialLine
 from lava.serial.console import Console
 from lava.serial import miniterm
@@ -36,6 +37,45 @@ class SerialCommand(SubCommand):
     @classmethod
     def get_name(cls):
         return "serial"
+
+
+class ServiceCommand(Command):
+    """
+    Connect a local serial line to a message broker
+    
+    TODO: explain how this works
+    """
+    
+    log = logging.getLogger("lava.serial.ServiceCommand")
+
+    @classmethod
+    def get_name(cls):
+        return "service"
+
+    @classmethod
+    def register_arguments(cls, parser):
+        super(ServiceCommand, cls).register_arguments(parser)
+        parser.add_argument(
+            "-d", "--device",
+            metavar="DEVICE",
+            required=True,
+            help="expose this serial line (such as /dev/ttyUSB0)")
+        parser.add_argument(
+            "-b", "--broker",
+            metavar="BROKER",
+            required=True,
+            help="Broker connection string")
+
+    def invoke(self):
+        try:
+            from lava.serial.service import BrokerBridgeService
+        except ImportError:
+            raise LavaCommandError("Kombu is required to run the service")
+        else:
+            service = BrokerBridgeService(self.args.device, self.args.broker)
+            service.run_forever()
+
+
 class ConsoleCommand(Command):
     """
     Open an interactive console on a selected serial line
@@ -53,11 +93,10 @@ class ConsoleCommand(Command):
 
         --network will open a TCP/IP socket and
         connect to that device. The device can be
-        exposed with `lava-tool serial service`
+        exposed with `lava serial service`
 
         --managed will open a connection to LAVA
         server and access a serial line defined there
-
     """
 
     @classmethod

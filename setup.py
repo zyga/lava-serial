@@ -41,6 +41,7 @@ setup(
     serial = lava.serial.commands:SerialCommand
     [lava.serial.commands]
     console = lava.serial.commands:ConsoleCommand
+    service = lava.serial.commands:ServiceCommand
     """,
     classifiers=[
         "Development Status :: 3 - Alpha",
